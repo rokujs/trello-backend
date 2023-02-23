@@ -59,7 +59,11 @@ THIRD_APPS = [
     'corsheaders'
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_APPS
+LOCAL_APPS = [
+    "tasks.apps.TasksConfig",
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
