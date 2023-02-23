@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init/postgres:/docker-entrypoint-initdb.d:ro
+      - ./storage/postgres:/var/lib/postgresql/data:rw
+    env_file: envs/postgres.env
+    networks:
+      - backend_net
+
+  trello-backend:
+    platform: linux/x86_64
+    build: trello_backend
+    links:
+      - postgres:postgres
+    volumes:
+      - ./trello_backend:/opt/project:rw
+    ports:
+      - "8000:8000"
+    networks:
+      - backend_net
+      - nginx_net
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    links:
+      - trello-backend:trello-backend
+    restart: always
+    volumes:
+      - ./init/nginx/conf/:/etc/nginx/conf.d/:ro
+    networks:
+      - nginx_net
+
+networks:
+  backend_net:
+  nginx_net:
