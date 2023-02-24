@@ -1,6 +1,6 @@
 from django.db import models
 
-from tasks.models.auditor import Auditor
+from apps.tasks.models.auditor import Auditor
 
 class Task(Auditor):
     STATE = [(0, 'BACKLOG'), (1, 'TO DO'), (2, 'DOING'), (3, 'TEST'), (4, 'DONE')]
@@ -14,5 +14,3 @@ class Task(Auditor):
 
     def __str__(self) -> str:
         return "task {}: {} | priority: {} | state: {}".format(self.pk, self.name, self.priority, self.state)
-
-

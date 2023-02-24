@@ -1,7 +1,7 @@
 from django.db import models
 
-from tasks.models.auditor import Auditor
-from tasks.models.task import Task
+from apps.tasks.models.auditor import Auditor
+from apps.tasks.models.task import Task
 
 class Comment(Auditor):
     comment = models.TextField()
