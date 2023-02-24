@@ -1,17 +1,28 @@
 from rest_framework import serializers
 from apps.tasks.models.task import Task
 
+
 class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        exclude = ('date_created', 'date_updated')
+        fields = (
+            "pk",
+            "name",
+            "description",
+            "state",
+            "priority",
+            "dateline"
+        )
+        read_only_fields = (
+            "pk",
+        )
 
 
 class TaskListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-    
+
     def to_representation(self, instance):
         return {
             'Id': instance.id,
