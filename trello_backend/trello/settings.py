@@ -51,16 +51,16 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.postgres'
+    'django.contrib.postgres',
 ]
 
 THIRD_APPS = [
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
 ]
 
 LOCAL_APPS = [
-    "tasks.apps.TasksConfig",
+    "apps.tasks.apps.TasksConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
