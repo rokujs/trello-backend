@@ -1,10 +1,35 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import status
+from rest_framework import status, generics
 from apps.tasks.models.task import Task
-from apps.tasks.api.serializers import TaskSerializer, TaskListSerializer
+from apps.tasks.api.serializers.serializers import TaskSerializer, TaskListSerializer
 
-@api_view(['GET', 'POST'])
+
+class TaskListApiView(generics.ListAPIView):
+    serializer_class = TaskListSerializer
+
+    def get_queryset(self):
+        return self.get_serializer().Meta.model.objects.all()
+
+class TaskCreateApiView(generics.CreateAPIView):
+    serializer_class = TaskSerializer
+    
+class TaskRetriviewApiView(generics.RetrieveAPIView):
+    serializer_class = TaskListSerializer
+
+    def get_queryset(self):
+        return self.get_serializer().Meta.model.objects.all()
+    
+class TaskDestroyApiView(generics.DestroyAPIView):
+    serializer_class = TaskSerializer
+
+    def get_queryset(self):
+        return self.get_serializer().Meta.model.objects.all()
+    
+class TaskUpdateApiView(generics.UpdateAPIView):
+    serializer_class = TaskSerializer
+
+""" @api_view(['GET', 'POST'])
 def task_api_view(request):
 #     list
     if request.method == 'GET':
@@ -26,7 +51,7 @@ def task_api_view(request):
 def task_detail_api_view(request, pk=None):
 #     queryset
     task = Task.objects.filter(id = pk).first()
-
+    print(task)
 #     validation
     if task:
 
@@ -48,4 +73,4 @@ def task_detail_api_view(request, pk=None):
             task.delete()
             return Response({'message': 'Tarea eliminada correctamente!'}, status=status.HTTP_200_OK)
 
-    return Response({'message': 'No se ha encontrado una tarea con estos datos'}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'message': 'No se ha encontrado una tarea con estos datos'}, status=status.HTTP_400_BAD_REQUEST) """
