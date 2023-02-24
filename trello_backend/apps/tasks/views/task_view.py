@@ -1,5 +1,4 @@
 from rest_framework import generics
-from django.views.decorators.csrf import csrf_exempt
 
 from apps.tasks.models import Task
 from apps.tasks.serializers import TaskSerializer, TaskListSerializer
