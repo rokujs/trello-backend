@@ -1,10 +1,7 @@
-from django.contrib.auth import get_user_model
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APITestCase
 
 from apps.tasks.models import Task
-
-User = get_user_model()
 
 
 class TaskTestCase(APITestCase):
