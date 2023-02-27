@@ -23,6 +23,7 @@ class TaskSerializer(serializers.ModelSerializer):
 class TaskListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
+        fields = '__all__'
 
     def to_representation(self, instance):
         comments = Comment.objects.filter(
