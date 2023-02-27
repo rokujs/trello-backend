@@ -1,2 +1,2 @@
-from apps.tasks.views.task_view import TaskApiView, TaskCreateUpdateApiView
-from apps.tasks.views.comment_view import CommentCreateUpdateApiView
+from apps.tasks.views.task_view import TaskApiView, TaskCreateApiView, TaskUpdateApiView
+from apps.tasks.views.comment_view import CommentCreateApiView, CommentUpdateApiView
