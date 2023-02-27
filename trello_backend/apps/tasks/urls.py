@@ -6,5 +6,9 @@ urlpatterns = [
     path("create/", views.TaskCreateUpdateApiView.as_view(),
          name="task_create"),
     path("update/<int:pk>/", views.TaskCreateUpdateApiView.as_view(),
-         name="task_update")
+         name="task_update"),
+    path("comment/create/", views.CommentCreateUpdateApiView.as_view(),
+         name="comment_create"),
+    path("comment/update/<int:pk>/", views.CommentCreateUpdateApiView.as_view(),
+         name="comment_update")
 ]
