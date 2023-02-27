@@ -2,7 +2,7 @@ from rest_framework import serializers
 from apps.tasks.models import Comment
 
 
-class commentSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
