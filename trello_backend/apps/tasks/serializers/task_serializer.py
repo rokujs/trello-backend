@@ -7,7 +7,7 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ("pk", "name", "description", "state", "priority", "dateline")
-        read_only_fields = ("pk")
+        # read_only_fields = ("pk")
 
     def to_representation(self, instance):
         return {

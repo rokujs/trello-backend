@@ -1,7 +1,7 @@
 from django.urls import path
-from apps.tasks.api.views.task_view import TaskCreateUpdateApiView, TaskDestroyApiView, TaskApiView
-from apps.tasks.api.views.general_views import (PriorityCreateApiView, PriorityListApiView, PriorityDestroyApiView,
-StateCreateApiView, StateListApiView, StateDestroyApiView)
+from apps.tasks.views.task_view import TaskCreateUpdateApiView, TaskDestroyApiView, TaskApiView
+from apps.tasks.views.priority_view import PriorityCreateApiView, PriorityListApiView, PriorityDestroyApiView
+from apps.tasks.views.state_view import StateCreateApiView, StateListApiView, StateDestroyApiView
 
 urlpatterns = [
     path("", TaskApiView.as_view(), name="tasks"),

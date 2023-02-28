@@ -5,7 +5,7 @@ from apps.tasks.models.state import State
 
 class Task(Auditor):
     
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
