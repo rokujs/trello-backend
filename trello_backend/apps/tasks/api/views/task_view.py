@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from apps.tasks.models import Task
-from apps.tasks.serializers import TaskSerializer, TaskListSerializer
+from apps.tasks.api.serializers.task_serializer import TaskSerializer, TaskListSerializer
 from apps.tasks.filters import TaskFilter
 
 
