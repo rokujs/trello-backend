@@ -2,9 +2,9 @@ from django.db import models
 
 from apps.tasks.models.auditor import Auditor
 
+
 class Priority(Auditor):
-    
-    name = models.CharField(max_length=100, null=False)
+    name = models.CharField(max_length=64, unique=True)
 
     def __str__(self) -> str:
         return "{}".format(self.name)

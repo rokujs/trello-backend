@@ -11,9 +11,11 @@ class TaskApiView(generics.ListAPIView):
     filterset_fields = ('pk', 'name', 'id')
     filterset_class = TaskFilter
 
+
 class TaskCreateUpdateApiView(generics.UpdateAPIView, generics.CreateAPIView):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
+
 
 class TaskDestroyApiView(generics.RetrieveDestroyAPIView):
     serializer_class = TaskSerializer
