@@ -1,7 +1,8 @@
 from django.db import models
 
-from apps.tasks.models.auditor import Auditor
+from apps.security.models.auditor import Auditor
 from apps.tasks.models.task import Task
+
 
 class Comment(Auditor):
     comment = models.TextField()
@@ -9,8 +10,3 @@ class Comment(Auditor):
 
     def __str__(self) -> str:
         return "comment {}: {}".format(self.pk, self.comment)
-
-
-
-
-

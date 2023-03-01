@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.tasks.models.auditor import Auditor
+from apps.security.models.auditor import Auditor
 
 
 class Priority(Auditor):

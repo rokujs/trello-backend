@@ -5,6 +5,6 @@ from apps.tasks.models.state import State
 from apps.tasks.models.priority import Priority
 
 admin.site.register(Comment)
-admin.site.register(Task) 
+admin.site.register(Task)
 admin.site.register(State)
 admin.site.register(Priority)
