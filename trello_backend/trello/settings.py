@@ -63,7 +63,8 @@ THIRD_APPS = [
 ]
 
 LOCAL_APPS = [
-    "apps.tasks.apps.TasksConfig",
+    "apps.security.apps.SecurityConfig",
+    "apps.tasks.apps.TasksConfig"
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + LOCAL_APPS
