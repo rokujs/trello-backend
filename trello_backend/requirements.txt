@@ -1,14 +1,30 @@
 asgiref==3.6.0
+<<<<<<< HEAD
+class-registry==2.1.2
+=======
 backports.zoneinfo==0.2.1
 certifi==2022.12.7
 charset-normalizer==3.0.1
 coreapi==2.3.3
 coreschema==0.0.4
+>>>>>>> develop
 Django==4.1.7
-django-cors-headers==3.13.0
+django-cors-headers==3.14.0
 django-filter==22.1
 django-rest-swagger==2.2.0
 djangorestframework==3.14.0
+<<<<<<< HEAD
+filters-django==1.0.5
+pip==22.0.4
+psycopg2==2.9.5
+python-dateutil==2.8.2
+pytz==2022.7.1
+regex==2022.10.31
+setuptools==58.1.0
+six==1.16.0
+sqlparse==0.4.3
+tzdata==2022.7
+=======
 drf-yasg==1.21.5
 gunicorn==20.1.0
 idna==3.4
@@ -27,3 +43,4 @@ simplejson==3.18.3
 sqlparse==0.4.3
 uritemplate==4.1.1
 urllib3==1.26.14
+>>>>>>> develop
