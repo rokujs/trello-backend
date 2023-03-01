@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 import json
+import datetime
 import psycopg2.extensions
 
 from django.core.exceptions import ImproperlyConfigured
@@ -57,6 +58,7 @@ DJANGO_APPS = [
 
 THIRD_APPS = [
     'rest_framework',
+    'rest_framework_simplejwt',
     'django_filters',
     'corsheaders',
     'drf_yasg'
@@ -138,10 +140,21 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}
+
+# Config JWT
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),
+    'ALGORITHM': 'HS256'
 }
 
 AUTH_USER_MODEL = 'security.User'
