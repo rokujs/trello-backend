@@ -1,13 +1,17 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from apps.tasks.models import Task, Comment
+from apps.tasks.models import Task, Comment, State, Priority
 
 
 class CommentTestCase(APITestCase):
     def setUp(self):
+        self.sate1, _ = State.objects.get_or_create(name="BACKLOG")
+        self.priority1, _ = Priority.objects.get_or_create(name="ALTA")
+
         self.task1 = Task.objects.create(
-            name='Task 1', description='Description of task 1', state=0, priority=0, dateline="2020-05-01")
+            name='Task 1', description='Description of task 1', state=self.sate1, priority=self.priority1, dateline="2020-05-01")
+
         self.comment1 = Comment.objects.create(
             task=self.task1, comment="First comment")
         self.comment2 = Comment.objects.create(

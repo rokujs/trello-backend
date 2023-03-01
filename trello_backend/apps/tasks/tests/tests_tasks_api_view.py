@@ -1,17 +1,23 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from apps.tasks.models import Task
+from apps.tasks.models import Task, State, Priority
 
 
 class TaskTestCase(APITestCase):
     def setUp(self):
+        self.state1, _ = State.objects.get_or_create(name="BACKLOG")
+        self.state2, _ = State.objects.get_or_create(name="TO DO")
+
+        self.priority1, _ = Priority.objects.get_or_create(name="ALTA")
+        self.priority2, _ = Priority.objects.get_or_create(name="BAJA")
+
         self.task1 = Task.objects.create(
-            name='Task 1', description='Description of task 1', state=0, priority=0, dateline="2020-05-01")
+            name='Task 1', description='Description of task 1', state=self.state1, priority=self.priority1, dateline="2020-05-01")
         self.task2 = Task.objects.create(
-            name='Task 2', description='Description of task 2', state=1, priority=1, dateline="2020-06-01")
+            name='Task 2', description='Description of task 2', state=self.state2, priority=self.priority2, dateline="2020-06-01")
         self.task3 = Task.objects.create(
-            name='Task 3', description='Description of task 3', state=2, priority=2, dateline="2020-07-01")
+            name='Task 3', description='Description of task 3', state=self.state1, priority=self.priority1, dateline="2020-07-01")
 
     def test_task_list_view(self):
         response = self.client.get('/api/tasks/')
@@ -37,8 +43,8 @@ class TaskTestCase(APITestCase):
         data = {
             "name": "test_create",
             "description": "A test of create",
-            "state": 0,
-            "priority": 0,
+            "state_id": 1,
+            "priority_id": 1,
             "dateline": "2023-01-01"
         }
 
@@ -50,8 +56,8 @@ class TaskTestCase(APITestCase):
         task_data = {
             'name': 'Updated Task',
             'description': 'Description of updated task',
-            'state': 0,
-            'priority': 0,
+            'state_id': 1,
+            'priority_id': 1,
             'dateline': '2023-03-02',
         }
         response = self.client.put(

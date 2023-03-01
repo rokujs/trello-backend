@@ -7,8 +7,9 @@ class TaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ("pk", "name", "description", "state", "priority", "dateline")
-        # read_only_fields = ("pk")
+        fields = ("pk", "name", "description",
+                  "state_id", "priority_id", "dateline")
+        read_only_fields = ("pk",)
 
     def to_representation(self, instance):
         comments = Comment.objects.filter(
@@ -19,14 +20,15 @@ class TaskSerializer(serializers.ModelSerializer):
             'Descripción': instance.description,
             'Estado': instance.state.__str__(),
             'Prioridad': instance.priority.__str__(),
-            'Fecha de finalizacion': instance.dateline
-        }    
+            'Fecha de finalizacion': instance.dateline,
+            'Comentarios': comments
+        }
+
 
 class TaskListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
-
 
     def to_representation(self, instance):
         return {
