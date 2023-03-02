@@ -33,6 +33,7 @@ urlpatterns = [
         name='schema-redoc'
     ),
     path('api/tasks/', include('apps.tasks.urls')),
+    path('api/user/', include('apps.security.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
