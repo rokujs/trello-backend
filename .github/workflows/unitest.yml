@@ -1,0 +1,45 @@
+name: Django CI
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build:
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: app_trello
+          POSTGRES_PASSWORD: "Xf*5Sr8Kbz0BV7bIPz8ASot*iEKGBL"
+          POSTGRES_DB: test_trello
+
+    runs-on: ubuntu-20.04
+    strategy:
+      max-parallel: 4
+      matrix:
+        db:
+          - postgres
+        python-version:
+          - 3.8
+        include:
+          - db: postgres
+            db_port: 5432
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Tests
+        run: |
+          sed -i 's/postgres/0.0.0.0/' trello_backend/secret.json
+          coverage run manage.py test --noinput
+          coverage report -m
