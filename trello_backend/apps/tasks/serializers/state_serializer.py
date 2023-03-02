@@ -5,7 +5,7 @@ from apps.tasks.models.state import State
 class StateSerializer(serializers.ModelSerializer):
     class Meta:
         model = State
-        exclude = ('date_created', 'date_updated')
+        fields = '__all__'
 
     def to_representation(self, instance):
         return {
