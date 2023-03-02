@@ -37,9 +37,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r trello_backend/requirements.txt
       - name: Tests
         run: |
           sed -i 's/postgres/127.0.0.1/' secret.json
-          coverage run manage.py test --noinput
+          coverage run trello_backend/manage.py test --noinput
           coverage report -m
