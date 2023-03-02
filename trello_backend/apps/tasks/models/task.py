@@ -1,5 +1,6 @@
 from django.db import models
 from apps.security.models.auditor import Auditor
+from apps.security.models.user import User
 from apps.tasks.models.priority import Priority
 from apps.tasks.models.state import State
 
@@ -12,6 +13,8 @@ class Task(Auditor):
     priority = models.ForeignKey(
         Priority, on_delete=models.CASCADE, to_field="id", default=1)
     dateline = models.DateField(null=True, blank=True)
+    users = models.ManyToManyField(
+        User, related_name="tasks", null=True, blank=True)
 
     def __str__(self) -> str:
         return "task {}: {}".format(self.pk, self.name)
