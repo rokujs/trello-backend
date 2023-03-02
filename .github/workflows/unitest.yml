@@ -42,5 +42,5 @@ jobs:
         run: |
           sed -i 's/postgres/127.0.0.1/' trello_backend/secret.json
           ls -la
-          coverage run trello_backend/manage.py test --noinput
-          coverage report -m
+          python -m coverage run trello_backend/manage.py test --noinput
+          python -m coverage report -m
