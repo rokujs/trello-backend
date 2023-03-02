@@ -1,11 +1,19 @@
+from django.contrib.auth import get_user_model
+
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 from apps.tasks.models import Task, State, Priority
 
+User = get_user_model()
+
 
 class TaskTestCase(APITestCase):
     def setUp(self):
+        self.superuser = User.objects.create_superuser(
+            username="admin", email="admin@trello.com", password="Admin1234.")
+        self.user = User.objects.create(
+            username="user", email="user@trello.com", bio="I'm user", first_name="User", last_name="Common")
         self.state1, _ = State.objects.get_or_create(name="BACKLOG")
         self.state2, _ = State.objects.get_or_create(name="TO DO")
 
@@ -50,6 +58,23 @@ class TaskTestCase(APITestCase):
 
         response = self.client.post(url, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Task.objects.all().count(), 4)
+
+    def test_create_task_with_user(self):
+        url = "/api/tasks/create/"
+
+        data = {
+            "name": "test_create",
+            "description": "A test of create",
+            "state_id": 1,
+            "priority_id": 1,
+            "dateline": "2023-01-01",
+            "users": [self.superuser.id, self.user.id]
+        }
+
+        response = self.client.post(url, data=data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(len(response.data['Usuarios asignados']), 2)
         self.assertEqual(Task.objects.all().count(), 4)
 
     def test_task_update_view(self):
