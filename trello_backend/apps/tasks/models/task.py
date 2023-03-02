@@ -14,7 +14,7 @@ class Task(Auditor):
         Priority, on_delete=models.CASCADE, to_field="id", default=1)
     dateline = models.DateField(null=True, blank=True)
     users = models.ManyToManyField(
-        User, related_name="tasks", null=True, blank=True)
+        User, related_name="tasks", null=True)
 
     def __str__(self) -> str:
         return "task {}: {}".format(self.pk, self.name)
