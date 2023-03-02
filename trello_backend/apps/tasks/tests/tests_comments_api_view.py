@@ -10,10 +10,11 @@ User = get_user_model()
 
 class CommentTestCase(APITestCase):
     def setUp(self):
+        self.password = "Admin1234."
         self.superuser = User.objects.create_superuser(
-            username="admin", email="admin@trello.com", password="Admin1234.")
+            username="admin", email="admin@trello.com", password=self.password)
         self.user = User.objects.create(
-            username="user", email="user@trello.com", bio="I'm user", first_name="User", last_name="Common")
+            username="user", email="user@trello.com", bio="I'm user", first_name="User", last_name="Common", password="user1234.")
         self.sate1, _ = State.objects.get_or_create(name="BACKLOG")
         self.priority1, _ = Priority.objects.get_or_create(name="ALTA")
 
@@ -30,11 +31,22 @@ class CommentTestCase(APITestCase):
     def test_create_comment(self):
         url = "/api/tasks/comment/create/"
 
+        # Get the token for the user
+        url_token = '/api/user/token/'
+        data_token = {
+            "username": self.superuser.username,
+            "password": self.password
+        }
+        token = self.client.post(url_token, data=data_token, format='json')
+
         data = {
             "comment": "fourth comment",
-            "task": self.task1.id,
-            "user": self.user.id
+            "task": self.task1.id
         }
+
+        # Add the token to the header
+        self.client.credentials(
+            HTTP_AUTHORIZATION='Bearer ' + token.data["access"])
 
         response = self.client.post(url, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

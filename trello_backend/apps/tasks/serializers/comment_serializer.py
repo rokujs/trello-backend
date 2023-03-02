@@ -5,6 +5,7 @@ from apps.security.serializers.user_serializer import UserSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Comment
         fields = (
@@ -14,8 +15,13 @@ class CommentSerializer(serializers.ModelSerializer):
             "user"
         )
         read_only_fields = (
-            "pk",
+            "pk", "user"
         )
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        comment = Comment.objects.create(user=user, **validated_data)
+        return comment
 
 
 class CommentTaskSerializer(serializers.ModelSerializer):
