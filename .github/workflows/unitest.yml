@@ -40,6 +40,6 @@ jobs:
           pip install -r trello_backend/requirements.txt
       - name: Tests
         run: |
-          sed -i 's/postgres/0.0.0.0/' trello_backend/secret.json
+          sed -i 's/postgres/127.0.0.1/' trello_backend/secret.json
           coverage run manage.py test --noinput
           coverage report -m
