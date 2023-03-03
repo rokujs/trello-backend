@@ -1,6 +1,5 @@
 from django.urls import path
 from apps.tasks import views
-from apps.tasks.views.priority_view import PriorityCreateApiView, PriorityListApiView, PriorityUpdateDestroyApiView
 from apps.tasks.views.state_view import StateCreateApiView, StateListApiView, StateDestroyApiView
 
 urlpatterns = [
@@ -13,9 +12,9 @@ urlpatterns = [
     path("comment/<int:pk>/", views.CommentUpdateDestroyApiView.as_view(),
          name="comment_update"),
 
-    path("priority/", PriorityListApiView.as_view(), name="priority"),
+    path("priority/", views.PriorityListApiView.as_view(), name="priority"),
     path("priority/<int:pk>/",
-         PriorityUpdateDestroyApiView.as_view(), name="priority_retrieve_update_destroy"),
+         views.PriorityUpdateDestroyApiView.as_view(), name="priority_retrieve_update_destroy"),
 
     path("state/", StateListApiView.as_view(), name="state_list"),
     path("state/create_update/", StateCreateApiView.as_view(),
