@@ -1,29 +1,17 @@
 from rest_framework import generics
 
 from apps.tasks.models import Task
-from apps.tasks.serializers.task_serializer import TaskSerializer, TaskListSerializer
+from apps.tasks.serializers.task_serializer import TaskSerializer
 from apps.tasks.filters import TaskFilter
 
 
-class TaskApiView(generics.ListAPIView):
+class TaskApiView(generics.ListCreateAPIView):
     queryset = Task.objects.all()
-    serializer_class = TaskListSerializer
+    serializer_class = TaskSerializer
     filterset_fields = ('pk', 'name', 'id')
     filterset_class = TaskFilter
 
 
-class TaskCreateApiView(generics.CreateAPIView):
+class TaskUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
-
-
-class TaskUpdateApiView(generics.UpdateAPIView):
-    serializer_class = TaskSerializer
-    queryset = Task.objects.all()
-
-
-class TaskDestroyApiView(generics.RetrieveDestroyAPIView):
-    serializer_class = TaskSerializer
-
-    def get_queryset(self):
-        return self.get_serializer().Meta.model.objects.all()

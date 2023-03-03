@@ -36,9 +36,9 @@ class TaskTestCase(APITestCase):
         response = self.client.get('/api/tasks/?id={}'.format(self.task1.id))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['Id'], self.task1.id)
-        self.assertEqual(response.data[0]['Estado'], "BACKLOG")
-        self.assertEqual(response.data[0]['Prioridad'], "ALTA")
+        self.assertEqual(response.data[0]['id'], self.task1.id)
+        self.assertEqual(response.data[0]['state'], "BACKLOG")
+        self.assertEqual(response.data[0]['priority'], "ALTA")
 
     def test_task_filter_by_name_view(self):
         response = self.client.get('/api/tasks/?name=task')
@@ -46,7 +46,7 @@ class TaskTestCase(APITestCase):
         self.assertEqual(len(response.data), 3)
 
     def test_create_task(self):
-        url = "/api/tasks/create/"
+        url = "/api/tasks/"
 
         data = {
             "name": "test_create",
@@ -61,7 +61,7 @@ class TaskTestCase(APITestCase):
         self.assertEqual(Task.objects.all().count(), 4)
 
     def test_create_task_with_user(self):
-        url = "/api/tasks/create/"
+        url = "/api/tasks/"
 
         data = {
             "name": "test_create",
@@ -74,7 +74,7 @@ class TaskTestCase(APITestCase):
 
         response = self.client.post(url, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(len(response.data['Usuarios asignados']), 2)
+        self.assertEqual(len(response.data['assigned_users']), 2)
         self.assertEqual(Task.objects.all().count(), 4)
 
     def test_task_update_view(self):
@@ -86,7 +86,14 @@ class TaskTestCase(APITestCase):
             'dateline': '2023-03-02',
         }
         response = self.client.put(
-            '/api/tasks/update/{}/'.format(self.task3.id), task_data, format='json')
+            '/api/tasks/{}/'.format(self.task3.id), task_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Task.objects.get(
             id=self.task3.id).name, 'Updated Task')
+
+    def test_delete_task(self):
+        url = f"/api/tasks/{self.task1.id}/"
+
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Task.objects.all().count(), 2)
