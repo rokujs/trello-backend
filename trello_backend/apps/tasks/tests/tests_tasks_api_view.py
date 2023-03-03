@@ -46,7 +46,7 @@ class TaskTestCase(APITestCase):
         self.assertEqual(len(response.data), 3)
 
     def test_create_task(self):
-        url = "/api/tasks/create/"
+        url = "/api/tasks/"
 
         data = {
             "name": "test_create",
@@ -61,7 +61,7 @@ class TaskTestCase(APITestCase):
         self.assertEqual(Task.objects.all().count(), 4)
 
     def test_create_task_with_user(self):
-        url = "/api/tasks/create/"
+        url = "/api/tasks/"
 
         data = {
             "name": "test_create",
@@ -86,7 +86,14 @@ class TaskTestCase(APITestCase):
             'dateline': '2023-03-02',
         }
         response = self.client.put(
-            '/api/tasks/update/{}/'.format(self.task3.id), task_data, format='json')
+            '/api/tasks/{}/'.format(self.task3.id), task_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Task.objects.get(
             id=self.task3.id).name, 'Updated Task')
+
+    def test_delete_task(self):
+        url = f"/api/tasks/{self.task1.id}/"
+
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Task.objects.all().count(), 2)

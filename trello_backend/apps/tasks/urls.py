@@ -5,10 +5,8 @@ from apps.tasks.views.state_view import StateCreateApiView, StateListApiView, St
 
 urlpatterns = [
     path("", views.TaskApiView.as_view(), name="tasks"),
-    path("create/", views.TaskCreateApiView.as_view(), name="task_create"),
-    path("update/<int:pk>/", views.TaskUpdateApiView.as_view(), name="task_update"),
-    path("retrieve_destroy/<int:pk>/",
-         views.TaskDestroyApiView.as_view(), name="task_destroy"),
+    path("<int:pk>/", views.TaskUpdateDestroyApiView.as_view(),
+         name="task_update"),
 
     path("comment/create/", views.CommentCreateApiView.as_view(),
          name="comment_create"),

@@ -32,12 +32,3 @@ class TaskSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return representation(instance)
-
-
-class TaskListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Task
-        fields = '__all__'
-
-    def to_representation(self, instance):
-        return representation(instance)
