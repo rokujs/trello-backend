@@ -1,6 +1,8 @@
 # trello
 Exercise trello app
 
+[![Django CI](https://github.com/rokujs/trello-backend/actions/workflows/unitest.yml/badge.svg)](https://github.com/rokujs/trello-backend/actions/workflows/unitest.yml)
+
 # How to install
 This project use `docker` to work. Please refer to https://docs.docker.com/engine/install/ in order to check how install `docker` on your system
 
