@@ -6,7 +6,7 @@ on:
       - develop
 
 jobs:
-  build:
+  tests:
     services:
       postgres:
         image: postgres:latest
@@ -29,6 +29,10 @@ jobs:
           - db: postgres
             db_port: 5432
     steps:
+      - name: Cancel Previous Redundant tests
+        uses: styfle/cancel-workflow-action
+        with:
+          access_token: $${{github.token}}
       - uses: actions/checkout@v2
         with:
           fetch_depth: 0
