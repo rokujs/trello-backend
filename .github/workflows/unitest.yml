@@ -34,15 +34,14 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Move to project
-        run: cd trello_backend && ls -la
       - name: Install dependencies
         run: |
-          ls
+          cd trello_backend
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Tests
         run: |
+          cd trello_backend
           sed -i 's/postgres/127.0.0.1/' secret.json
           coverage run manage.py test --noinput
           coverage report -m
