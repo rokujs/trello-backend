@@ -6,16 +6,16 @@ on:
       - develop
 
 jobs:
-  build:
+  tests:
     services:
       postgres:
         image: postgres:latest
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: app_trello
-          POSTGRES_PASSWORD: "Xf*5Sr8Kbz0BV7bIPz8ASot*iEKGBL"
-          POSTGRES_DB: test_trello
+          POSTGRES_USER: ${{secrets.USER_DB}}
+          POSTGRES_PASSWORD: ${{secrets.PASSWORD_DB}}
+          POSTGRES_DB: $DB
 
     runs-on: ubuntu-20.04
     strategy:
@@ -29,7 +29,13 @@ jobs:
           - db: postgres
             db_port: 5432
     steps:
+      - name: Cancel Previous Redundant tests
+        uses: styfle/cancel-workflow-action
+        with:
+          access_token: $${{github.token}}
       - uses: actions/checkout@v2
+        with:
+          fetch_depth: 0
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
