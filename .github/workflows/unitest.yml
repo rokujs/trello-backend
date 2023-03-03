@@ -15,7 +15,7 @@ jobs:
         env:
           POSTGRES_USER: ${{secrets.USER_DB}}
           POSTGRES_PASSWORD: ${{secrets.PASSWORD_DB}}
-          POSTGRES_DB: ${{$DB}}
+          POSTGRES_DB: $DB
 
     runs-on: ubuntu-20.04
     strategy:
