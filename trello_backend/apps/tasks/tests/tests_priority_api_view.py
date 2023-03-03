@@ -13,7 +13,7 @@ class PriorityTestCase(APITestCase):
         response = self.client.get(
             '/api/tasks/priority/{}/'.format(self.priority1.id))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["Id"], self.priority1.id)
+        self.assertEqual(response.data["id"], self.priority1.id)
 
     def test_create_priority(self):
         url = "/api/tasks/priority/"

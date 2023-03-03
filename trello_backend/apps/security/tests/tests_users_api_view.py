@@ -51,8 +51,8 @@ class CommentTestCase(APITestCase):
 
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["Id"], self.user.id)
-        self.assertEqual(response.data["Biografia"], self.user.bio)
+        self.assertEqual(response.data["id"], self.user.id)
+        self.assertEqual(response.data["bio"], self.user.bio)
 
     def test_delete_user(self):
         url = f"/api/user/{self.user.id}/"

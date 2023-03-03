@@ -36,9 +36,9 @@ class TaskTestCase(APITestCase):
         response = self.client.get('/api/tasks/?id={}'.format(self.task1.id))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['Id'], self.task1.id)
-        self.assertEqual(response.data[0]['Estado'], "BACKLOG")
-        self.assertEqual(response.data[0]['Prioridad'], "ALTA")
+        self.assertEqual(response.data[0]['id'], self.task1.id)
+        self.assertEqual(response.data[0]['state'], "BACKLOG")
+        self.assertEqual(response.data[0]['priority'], "ALTA")
 
     def test_task_filter_by_name_view(self):
         response = self.client.get('/api/tasks/?name=task')
@@ -74,7 +74,7 @@ class TaskTestCase(APITestCase):
 
         response = self.client.post(url, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(len(response.data['Usuarios asignados']), 2)
+        self.assertEqual(len(response.data['assigned_users']), 2)
         self.assertEqual(Task.objects.all().count(), 4)
 
     def test_task_update_view(self):

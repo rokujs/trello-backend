@@ -7,9 +7,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("pk", "username", "email", "bio",
+        fields = ("id", "username", "email", "bio",
                   "first_name", "last_name", "password")
-        read_only_fields = ("pk",)
+        read_only_fields = ("id",)
 
     def create(self, validated_data):
         request = self.context.get("request")
@@ -41,8 +41,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return {
-            'Id': instance.id,
-            'Email': instance.email,
-            'Nombre': instance.get_full_name(),
-            'Biografia': instance.bio,
+            'id': instance.id,
+            'email': instance.email,
+            'names': instance.get_full_name(),
+            'bio': instance.bio,
         }

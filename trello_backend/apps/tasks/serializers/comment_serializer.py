@@ -9,13 +9,13 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = (
-            "pk",
+            "id",
             "comment",
             "task",
             "user"
         )
         read_only_fields = (
-            "pk", "user"
+            "id", "user"
         )
 
     def create(self, validated_data):
@@ -29,4 +29,4 @@ class CommentTaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('pk', 'user', 'comment')
+        fields = ('id', 'user', 'comment')

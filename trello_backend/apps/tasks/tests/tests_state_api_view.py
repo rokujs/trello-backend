@@ -12,7 +12,7 @@ class StateSTestCase(APITestCase):
         response = self.client.get(
             '/api/tasks/state/{}/'.format(self.state1.id))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["Id"], self.state1.id)
+        self.assertEqual(response.data["id"], self.state1.id)
 
     def test_create_state(self):
         url = "/api/tasks/state/"
