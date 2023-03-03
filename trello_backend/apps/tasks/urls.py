@@ -8,9 +8,9 @@ urlpatterns = [
     path("<int:pk>/", views.TaskUpdateDestroyApiView.as_view(),
          name="task_update"),
 
-    path("comment/create/", views.CommentCreateApiView.as_view(),
+    path("comment/", views.CommentCreateApiView.as_view(),
          name="comment_create"),
-    path("comment/update/<int:pk>/", views.CommentUpdateApiView.as_view(),
+    path("comment/<int:pk>/", views.CommentUpdateDestroyApiView.as_view(),
          name="comment_update"),
 
     path("priority/", PriorityListApiView.as_view(), name="priority_list"),

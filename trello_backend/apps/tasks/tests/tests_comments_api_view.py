@@ -28,8 +28,14 @@ class CommentTestCase(APITestCase):
         self.comment3 = Comment.objects.create(
             task=self.task1, comment="Third comment", user=self.superuser)
 
+    def test_comment_get_one_view(self):
+        response = self.client.get(
+            '/api/tasks/comment/{}/'.format(self.comment3.id))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["pk"], self.comment3.id)
+
     def test_create_comment(self):
-        url = "/api/tasks/comment/create/"
+        url = "/api/tasks/comment/"
 
         # Get the token for the user
         url_token = '/api/user/token/'
@@ -57,7 +63,13 @@ class CommentTestCase(APITestCase):
             'comment': 'Updated comment'
         }
         response = self.client.patch(
-            '/api/tasks/comment/update/{}/'.format(self.comment3.id), task_data, format='json')
+            '/api/tasks/comment/{}/'.format(self.comment3.id), task_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Comment.objects.get(
             id=self.comment3.id).comment, 'Updated comment')
+
+    def test_comment_delete_view(self):
+        response = self.client.delete(
+            '/api/tasks/comment/{}/'.format(self.comment3.id))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Comment.objects.all().count(), 2)
