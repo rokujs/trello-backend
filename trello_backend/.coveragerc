@@ -1,0 +1,8 @@
+[run]
+branch = true
+omit = */tests/*, */migrations/*, */urls.py, */settings/*, */wsgi.py, manage.py, *__init__*, trello/wsgi.py, trello/asgi.py
+source = .
+
+[report]
+show_missing = true
+fail_under = 80

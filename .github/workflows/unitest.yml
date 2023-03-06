@@ -1,0 +1,53 @@
+name: Django CI
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  tests:
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: ${{secrets.USER_DB}}
+          POSTGRES_PASSWORD: ${{secrets.PASSWORD_DB}}
+          POSTGRES_DB: $DB
+
+    runs-on: ubuntu-20.04
+    strategy:
+      max-parallel: 4
+      matrix:
+        db:
+          - postgres
+        python-version:
+          - 3.8
+        include:
+          - db: postgres
+            db_port: 5432
+    steps:
+      - name: Cancel Previous Redundant tests
+        uses: styfle/cancel-workflow-action
+        with:
+          access_token: $${{github.token}}
+      - uses: actions/checkout@v2
+        with:
+          fetch_depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          cd trello_backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Tests
+        run: |
+          cd trello_backend
+          sed -i 's/postgres/127.0.0.1/' secret.json
+          coverage run manage.py test apps --noinput
+          coverage report -m
