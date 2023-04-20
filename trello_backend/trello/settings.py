@@ -61,7 +61,8 @@ THIRD_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'corsheaders',
-    'drf_yasg'
+    'drf_yasg',
+    'axes'
 ]
 
 LOCAL_APPS = [
@@ -80,6 +81,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware'
 ]
 
 ROOT_URLCONF = 'trello.urls'
@@ -139,6 +141,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'security.User'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -146,8 +150,17 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'AUTHENTICATION_BACKENDS': (
+    'rest_framework.authentication.SessionAuthentication',
+    'django.contrib.auth.backends.ModelBackend',
+    )
 }
+
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesStandaloneBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Config JWT
 
@@ -157,7 +170,13 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256'
 }
 
-AUTH_USER_MODEL = 'security.User'
+# Config Axes
+AXES_FAILURE_LIMIT = 80
+AXES_COOLOFF_TIME = 5  # En minutos
+# AXES_LOCKOUT_TEMPLATE = 'axes/lockout.html'  # Opcional: Usa una plantilla personalizada para el bloqueo de la dirección IP
+# AXES_LOCKOUT_URL = '/api/lockout/'  # Opcional: Define una URL personalizada para el bloqueo de la dirección IP
+
+
 
 
 # Internationalization
